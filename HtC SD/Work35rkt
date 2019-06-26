@@ -1,0 +1,40 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname Work35rkt) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp")) #f)))
+(define-struct three-letter [letter1 letter2 letter3])
+
+; A three-letter is a structure
+;    (make-three-letter f s t)
+; where each of f s and t are either a 1String or #false
+; interpretation (make-three-letter f s t) means a three-letter where f is the first letter, s is the second letter and t is the third letter
+
+;; ==============================
+;; Functions:
+;; three-letter three-letter -> three-letter
+;; produces a word that indicate where the given ones agree and disagree
+;(define (compare-word tl1 tl2) (make-three-letter "a" "a" "a"));stub
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "a" "b" "c")) (make-three-letter "a" "b" "c"))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "d" "b" "c")) (make-three-letter #f "b" "c"))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "a" "d" "c")) (make-three-letter "a" #f "c"))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "a" "b" "d")) (make-three-letter "a" "b" #f))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "d" "e" "c")) (make-three-letter #f #f "c"))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "d" "b" "e")) (make-three-letter #f "b" #f))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "a" "d" "e")) (make-three-letter "a" #f #f))
+(check-expect (compare-word (make-three-letter "a" "b" "c") (make-three-letter "d" "e" "f")) (make-three-letter #f #f #f))
+(check-expect (compare-word (make-three-letter #f "b" "c") (make-three-letter "a" "b" "c")) (make-three-letter #f "b" "c"))
+(check-expect (compare-word (make-three-letter "a" #f "c") (make-three-letter "a" "b" "c")) (make-three-letter "a" #f "c"))
+(check-expect (compare-word (make-three-letter #f #f "c") (make-three-letter "a" "b" "c")) (make-three-letter #f #f "c"))
+(check-expect (compare-word (make-three-letter "a" "b" #f) (make-three-letter "a" "b" "c")) (make-three-letter "a" "b" #f))
+(check-expect (compare-word (make-three-letter #f "b" #f) (make-three-letter "a" "b" "c")) (make-three-letter #f "b" #f))
+(check-expect (compare-word (make-three-letter "a" #f #f) (make-three-letter "a" "b" "c")) (make-three-letter "a" #f #f))
+(check-expect (compare-word (make-three-letter #f #f #f) (make-three-letter "a" "b" "c")) (make-three-letter #f #f #f));; Enough!!
+(define (compare-word tl1 tl2)
+  (make-three-letter (cond
+                       [(equal? (three-letter-letter1 tl1) (three-letter-letter1 tl2)) (three-letter-letter1 tl1)]
+                       [else #f])
+                     (cond
+                       [(equal? (three-letter-letter2 tl1) (three-letter-letter2 tl2)) (three-letter-letter2 tl1)]
+                       [else #f])
+                     (cond
+                       [(equal? (three-letter-letter3 tl1) (three-letter-letter3 tl2)) (three-letter-letter3 tl1)]
+                       [else #f])))
