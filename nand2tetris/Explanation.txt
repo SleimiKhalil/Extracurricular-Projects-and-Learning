@@ -1,0 +1,1 @@
+The process of learning how to develop a general purpose computer, culminating in a playable Tetris and other games (just like game boys in my childhood).
