@@ -1,1 +1,2 @@
 The process of learning how to develop a general purpose computer, culminating in a playable Tetris and other games (just like game boys in my childhood).
+[UPDATE1: On 14 July 2019 I made an actual 16-bit computer Yaaaayyyyyyyyy!!!!]
